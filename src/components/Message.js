@@ -30,7 +30,6 @@ export default class Message extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    console.log('Message newProps', newProps);
     this.setState({
       selected: newProps.message.selected
     })

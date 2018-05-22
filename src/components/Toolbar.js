@@ -1,9 +1,7 @@
 import React from 'react'
 
 export default class Toolbar extends React.Component {
-  constructor(props){
-    super(props);
-  }
+
 
   getUnreadMessages = () => {
     let unread = this.props.messages.filter((message) => {
@@ -27,7 +25,7 @@ export default class Toolbar extends React.Component {
     } else {
       div = "fa fa-square-o"
     }
-    console.log(div);
+
     return div
   }
 
@@ -44,11 +42,11 @@ export default class Toolbar extends React.Component {
             <i className={this.selectedIcon()} ></i>
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick = {this.props.markAsRead}>
             Mark As Read
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick = {this.props.markAsUnread}>
             Mark As Unread
           </button>
 
@@ -66,7 +64,7 @@ export default class Toolbar extends React.Component {
             <option value="gschool">gschool</option>
           </select>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick = {this.props.deleteMess}>
             <i className="fa fa-trash-o"></i>
           </button>
         </div>

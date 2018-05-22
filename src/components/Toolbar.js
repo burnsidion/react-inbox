@@ -1,7 +1,3 @@
-
-
-
-
 import React from 'react'
 
 export default class Toolbar extends React.Component {
@@ -35,7 +31,7 @@ export default class Toolbar extends React.Component {
     return div
   }
 
-  selectAll = (e) => {
+  selectAll = () => {
     // 1. determine true/false for checkbox overlord
       let messArr = this.props.messages.map(x => x.selected)
     // 2. map over messages, make a new array and updated selected for each message, set to value determined  in #1

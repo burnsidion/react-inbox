@@ -2,9 +2,13 @@ import React from 'react'
 
 export default class Message extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = this.props.message;
+    let selected = false
+    if (props.message.selected) {
+      selected = props.message.selected
+    }
+    this.state = { selected }
   }
 
   read = () => {
@@ -25,6 +29,12 @@ export default class Message extends React.Component {
     return read
   }
 
+  componentWillReceiveProps(newProps){
+    this.setState({
+      selected: newProps.message.selected
+    })
+  }
+
   renderLabels = () => {
     const labels = this.props.message.labels;
     const htmlLabels = labels.map((label, i) => {
@@ -33,36 +43,27 @@ export default class Message extends React.Component {
     return htmlLabels;
   }
 
-  isStarred = (e) => {
-    e.preventDefault();
-    let elem = e.target.className;
-    console.log(e.target);
-    if(elem.length === 17){
-      this.setState({
-        starred: true
-      });
-    }else{
-      this.setState({
-        starred:false
-      })
-    }
+  starred = (e) => {
+
+    e.preventDefault()
+
+    this.props.starToggle(this.props.message)
+
   }
 
 
 
-
-
-  render(){
-    return(
-      <div className={this.read()}>
-        <div className="col-xs-1">
-          <div className="row">
-            <div className="col-xs-2">
-              <input type="checkbox" onChange={ () => this.props.selectToggle(this.props.message)} checked={this.props.message.selected} />
-            </div>
-            <div className="col-xs-2">
-              {this.state.starred ? <i onClick={this.isStarred} className="star fa fa-star"></i> :
-              <i onClick={this.isStarred} className="star fa fa-star-o"></i>}
+  render() {
+    return (<div className={this.read()}>
+      <div className="col-xs-1">
+        <div className="row">
+          <div className="col-xs-2">
+            <input type="checkbox" onChange={() => this.props.selectToggle(this.props.message)}  checked={this.state.selected ? 'checked' : '' }/>
+          </div>
+          <div className="col-xs-2">
+            <i className={this.props.message.starred
+              ? 'star fa fa-star'
+              : 'star fa fa-star-o'} onClick={this.starred}/>
             </div>
           </div>
         </div>
@@ -72,7 +73,8 @@ export default class Message extends React.Component {
             {this.props.message.subject}
           </a>
         </div>
-      </div>
-    )
+      </div>)
+    }
   }
-}
+
+ 

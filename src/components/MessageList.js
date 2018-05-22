@@ -4,10 +4,23 @@ import Message from './Message'
 
 export default class MessageList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { messages: props.messages }
+  }
+
+  componentWillReceiveProps(newProps){
+    // console.log('MessageList newProps', newProps);
+    this.setState({
+      ...this.state,
+      messages: newProps.messages
+    })
+  }
+
   render() {
     return (
       <div>
-      { this.props.messages.map(message => <Message key={message.id} message={message} selectToggle = {this.props.selectToggle} messages={this.props.messages} starToggle = {this.props.starToggle} />)}
+      { this.state.messages.map((message, i) => <Message key={i} message={message} selectToggle = {this.props.selectToggle} starToggle = {this.props.starToggle} />)}
       </div>
     )
   }

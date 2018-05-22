@@ -31,34 +31,25 @@ export default class Toolbar extends React.Component {
     return div
   }
 
-  selectAll = () => {
-    // 1. determine true/false for checkbox overlord
-      let messArr = this.props.messages.map(x => x.selected)
-    // 2. map over messages, make a new array and updated selected for each message, set to value determined  in #1
-
-    // 3. update state setState({...this.state, newMessages})
-    console.log(messArr);
-  }
-
   render() {
     return(
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
             <span className="badge badge">{this.getUnreadMessages()}</span>
-          unread messages
+            unread messages
           </p>
 
-          <button className="btn btn-default" onClick={this.selectAll}>
+          <button className="btn btn-default" onClick={this.props.selectAll}>
             <i className={this.selectedIcon()} ></i>
           </button>
 
           <button className="btn btn-default">
-          Mark As Read
+            Mark As Read
           </button>
 
           <button className="btn btn-default">
-          Mark As Unread
+            Mark As Unread
           </button>
 
           <select className="form-control label-select">

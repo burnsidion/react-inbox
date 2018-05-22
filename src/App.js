@@ -42,11 +42,46 @@ class App extends Component {
     })
   }
 
+  selectAll = (event) => {
+    console.log('App:selectAll');
+    event.preventDefault()
+    let messArr = this.state.messages
+    // const selectedList = messArr.filter((message) => message.selected)
+    // const anySelected = this.state.messages.some(m => m.selected)
+    const allSelected = this.state.messages.every(m => m.selected)
+    this.setState({
+      messages: this.state.messages.map(message => {
+        message.selected = !allSelected
+        return message
+      })
+    })
+
+
+    // if (selectedList.length > 0) {
+    //   messArr.forEach(message => {
+    //     console.log(message.selected);
+    //     message.selected = false
+    //   })
+    // }
+    // else {
+    //   messArr.forEach(message => {
+    //     console.log(message.selected);
+    //     message.selected = true
+    //   })
+    // }
+
+
+
+
+
+
+  }
+
 
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages}/>
+      <Toolbar messages={this.state.messages} selectAll = {this.selectAll}/>
       <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle}/>
     </div>);
   }

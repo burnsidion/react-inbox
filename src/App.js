@@ -16,6 +16,7 @@ class App extends Component {
 
     let index = this.state.messages.indexOf(message)
     this.setState({
+      ...this.state,
       messages: [
         ...this.state.messages.slice(0, index), { // first part of array
           ...message,
@@ -31,6 +32,7 @@ class App extends Component {
     let index = this.state.messages.indexOf(message)
 
     this.setState({
+      ...this.state,
       messages: [
         ...this.state.messages.slice(0, index), {
           ...message,
@@ -46,6 +48,7 @@ class App extends Component {
     event.preventDefault()
     const allSelected = this.state.messages.every(m => m.selected)
     this.setState({
+      ...this.state,
       messages: this.state.messages.map(message => {
         message.selected = !allSelected
         return message
@@ -56,8 +59,9 @@ class App extends Component {
   markAsRead = (message) => {
     let messArr = this.state.messages
     this.setState({
-      messages : messArr.map(mess => {
-        if(mess.selected === true){
+      ...this.state,
+      messages: messArr.map(mess => {
+        if (mess.selected === true) {
           mess.read = true
 
         }
@@ -69,8 +73,9 @@ class App extends Component {
   markAsUnread = (message) => {
     let messArr = this.state.messages
     this.setState({
-      messages : messArr.map(mess => {
-        if(mess.selected === true){
+      ...this.state,
+      messages: messArr.map(mess => {
+        if (mess.selected === true) {
           mess.read = false
         }
         return mess
@@ -81,20 +86,43 @@ class App extends Component {
   deleteMess = (message) => {
     let messArr = this.state.messages
     this.setState({
-      messages : messArr.filter(mess => {
-         return mess.selected !== true
-
-
+      ...this.state,
+      messages: messArr.filter(mess => {
+        return mess.selected !== true
       })
     })
-    console.log("deleteMess");
-
   }
 
+  addLabel = (e) => {
+    let messArr = this.state.messages
+    // this.setState({
+    //   ...this.state,
+    //   messages : messArr.map(mess => {
+    //     if(mess.selected === true){
+    //       return mess.labels.concat(e.target.value)
+    //     }
+    //   })
+    // })
+  }
+
+  // removeLabel = (message) => {
+  //   console.log('removeLabel');
+  //   let messArr = this.state.messages
+  //   this.setState({
+  //     messages: messArr.map(mess => {
+  //       console.log(mess.labels);
+  //       return mess.labels
+  //
+  //     })
+  //
+  //   })
+  //
+  //
+  // }
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages} selectAll = {this.selectAll} markAsRead = {this.markAsRead} markAsUnread = {this.markAsUnread} deleteMess = {this.deleteMess}/>
+      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} />
       <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle}/>
     </div>);
   }

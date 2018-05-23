@@ -30,9 +30,11 @@ export default class Message extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    this.setState({
-      selected: newProps.message.selected
-    })
+    console.log('Message newProps', newProps);
+    // this.setState({
+    //   ...this.state,
+    //   selected: newProps.message.selected
+    // })
   }
 
   renderLabels = () => {

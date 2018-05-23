@@ -10,10 +10,10 @@ export default class MessageList extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    this.setState({
-      ...this.state,
-      messages: newProps.messages
-    })
+    // this.setState({
+    //   ...this.state,
+    //   messages: newProps.messages
+    // })
   }
 
   render() {

@@ -1,18 +1,11 @@
 import React from 'react'
 
 export default class Toolbar extends React.Component {
-
-
   getUnreadMessages = () => {
     let unread = this.props.messages.filter((message) => {
-      return message.read === false
-
+      return true
     })
     return unread.length;
-  }
-
-  checkedMess = (elem) => {
-    return elem === true
   }
 
   selectedIcon = () => {
@@ -50,7 +43,7 @@ export default class Toolbar extends React.Component {
             Mark As Unread
           </button>
 
-          <select className="form-control label-select">
+          <select className="form-control label-select" onChange = {this.props.addLabel}>
             <option>Apply label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>

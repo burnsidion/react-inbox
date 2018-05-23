@@ -95,14 +95,15 @@ class App extends Component {
 
   addLabel = (e) => {
     let messArr = this.state.messages
-    // this.setState({
-    //   ...this.state,
-    //   messages : messArr.map(mess => {
-    //     if(mess.selected === true){
-    //       return mess.labels.concat(e.target.value)
-    //     }
-    //   })
-    // })
+    this.setState({
+      ...this.state,
+      messages : messArr.map(mess => {
+        return { ...mess }
+        // if(mess.selected === true){
+        //   return mess.labels.concat(e.target.value)
+        // }
+      })
+    })
   }
 
   // removeLabel = (message) => {

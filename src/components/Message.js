@@ -36,27 +36,23 @@ export default class Message extends React.Component {
     this.setState({
       ...this.state,
       selected: newProps.message.selected,
+      labels : newProps.message.labels,
+
 
     })
   }
 
   renderLabels = () => {
-    let labels = this.state.labels
-    let htmlLabels = labels.map((label, i) => {
+    let htmlLabels = this.state.labels.map((label, i) => {
       return <span key={i} className="label label-warning">{label}</span>
     });
     return htmlLabels;
   }
 
   starred = (e) => {
-
     e.preventDefault()
-
     this.props.starToggle(this.props.message)
-
   }
-
-
 
   render() {
     return (<div className={this.read()}>
@@ -81,5 +77,3 @@ export default class Message extends React.Component {
       </div>)
     }
   }
-
- 

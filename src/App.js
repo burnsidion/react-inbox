@@ -1,3 +1,4 @@
+
 import MessageList from './components/MessageList'
 import Toolbar from './components/Toolbar'
 import Seed from './seed.json'
@@ -95,19 +96,19 @@ class App extends Component {
 
   addLabel = (e) => {
     e.preventDefault()
-    let messArr = this.state.messages
-
     this.setState({
       ...this.state,
-      messages: messArr.map(mess => {
+      messages: this.state.messages.map(mess => {
         if (mess.selected) {
-          let labels;
-          if (!mess.labels.includes(e.target.value) && e.target.value != "Apply label") {
-            labels = [...mess.labels, e.target.value]
+          if (!mess.labels.includes(e.target.value) && e.target.value !== "Apply label") {
+            // If not already attached to msg, and not "Apply label", then kosher to proceed
+            mess.labels = [...mess.labels, e.target.value]
+          } else {
+            // trying to do something undesired with the label add
           }
-          mess.labels = labels
         }
         return mess
+
       })
     })
   }

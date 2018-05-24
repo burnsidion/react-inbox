@@ -1,4 +1,3 @@
-
 import MessageList from './components/MessageList'
 import Toolbar from './components/Toolbar'
 import Seed from './seed.json'
@@ -102,7 +101,10 @@ class App extends Component {
         if (mess.selected) {
           if (!mess.labels.includes(e.target.value) && e.target.value !== "Apply label") {
             // If not already attached to msg, and not "Apply label", then kosher to proceed
-            mess.labels = [...mess.labels, e.target.value]
+            mess.labels = [
+              ...mess.labels,
+              e.target.value
+            ]
           } else {
             // trying to do something undesired with the label add
           }
@@ -113,26 +115,27 @@ class App extends Component {
     })
   }
 
-
-
-  // removeLabel = (message) => {
-  //   console.log('removeLabel');
-  //   let messArr = this.state.messages
-  //   this.setState({
-  //     messages: messArr.map(mess => {
-  //       console.log(mess.labels);
-  //       return mess.labels
-  //
-  //     })
-  //
-  //   })
-  //
-  //
-  // }
+  removeLabel = (e) => {
+    e.preventDefault()
+    let messArr = this.state.messages
+    this.setState({
+      messages: messArr.map(mess => {
+        if (mess.selected) {
+          if (mess.labels.includes(e.target.value) && e.target.value !== "Remove label") {
+            //If already attached to msg, and not "Remove label", then good to remove
+            mess.labels = mess.labels.filter(x => {
+                return x !== e.target.value
+              })
+          }
+        }
+        return mess
+      })
+    })
+  }
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel}/>
+      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
       <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle}/>
     </div>);
   }

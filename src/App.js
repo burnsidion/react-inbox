@@ -94,17 +94,25 @@ class App extends Component {
   }
 
   addLabel = (e) => {
+    e.preventDefault()
     let messArr = this.state.messages
+
     this.setState({
       ...this.state,
-      messages : messArr.map(mess => {
-        return { ...mess }
-        // if(mess.selected === true){
-        //   return mess.labels.concat(e.target.value)
-        // }
+      messages: messArr.map(mess => {
+        if (mess.selected) {
+          let labels;
+          if (!mess.labels.includes(e.target.value) && e.target.value != "Apply label") {
+            labels = [...mess.labels, e.target.value]
+          }
+          mess.labels = labels
+        }
+        return mess
       })
     })
   }
+
+
 
   // removeLabel = (message) => {
   //   console.log('removeLabel');
@@ -123,7 +131,7 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} />
+      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel}/>
       <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle}/>
     </div>);
   }

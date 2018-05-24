@@ -3,7 +3,7 @@ import React from 'react'
 export default class Toolbar extends React.Component {
   getUnreadMessages = () => {
     let unread = this.props.messages.filter((message) => {
-      return true
+      return !message.read
     })
     return unread.length;
   }
@@ -45,7 +45,7 @@ export default class Toolbar extends React.Component {
 
           <select className="form-control label-select" onChange = {this.props.addLabel}>
             <option>Apply label</option>
-            <option value="dev">dev</option>
+            <option value="dev" >dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
           </select>

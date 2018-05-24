@@ -3,12 +3,15 @@ import React from 'react'
 export default class Message extends React.Component {
 
   constructor(props) {
+    // console.log(props);
     super(props);
     let selected = false
+    let labels = props.message.labels
     if (props.message.selected) {
       selected = props.message.selected
+
     }
-    this.state = { selected }
+    this.state = { selected,labels }
   }
 
   read = () => {
@@ -30,16 +33,16 @@ export default class Message extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    console.log('Message newProps', newProps);
-    // this.setState({
-    //   ...this.state,
-    //   selected: newProps.message.selected
-    // })
+    this.setState({
+      ...this.state,
+      selected: newProps.message.selected,
+
+    })
   }
 
   renderLabels = () => {
-    const labels = this.props.message.labels;
-    const htmlLabels = labels.map((label, i) => {
+    let labels = this.state.labels
+    let htmlLabels = labels.map((label, i) => {
       return <span key={i} className="label label-warning">{label}</span>
     });
     return htmlLabels;

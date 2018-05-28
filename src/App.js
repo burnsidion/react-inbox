@@ -1,15 +1,40 @@
 import MessageList from './components/MessageList'
 import Toolbar from './components/Toolbar'
-import Seed from './seed.json'
 import React, {Component} from 'react';
 import './App.css';
 
+const API = 'http://localhost:8082/api/messages/'
+
 class App extends Component {
+
+  
+
   constructor(props) {
     super(props)
     this.state = {
-      messages: Seed
+      messages: []
     }
+  }
+
+  async componentDidMount() {
+    const response = await fetch(API)
+    if (response.status === 200) {
+      const json = await response.json()
+      const messages = json._embedded.messages
+      this.setState({
+        ...this.state,
+        messages
+      })
+    } else {
+      console.log('Couldn/t fetch json', response.status);
+    }
+  }
+
+  newState = (data) => {
+    this.setState({
+      ...this.state,
+      messages: data
+    })
   }
 
   selectToggle = (message) => {
@@ -124,8 +149,8 @@ class App extends Component {
           if (mess.labels.includes(e.target.value) && e.target.value !== "Remove label") {
             //If already attached to msg, and not "Remove label", then good to remove
             mess.labels = mess.labels.filter(x => {
-                return x !== e.target.value
-              })
+              return x !== e.target.value
+            })
           }
         }
         return mess
@@ -135,8 +160,20 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} removeLabel={this.removeLabel}/>
-      <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle}/>
+      <Toolbar
+        messages={this.state.messages}
+        selectAll={this.selectAll}
+        markAsRead={this.markAsRead}
+        markAsUnread={this.markAsUnread}
+        deleteMess={this.deleteMess}
+        addLabel={this.addLabel}
+        removeLabel={this.removeLabel}
+        newState={this.newState}/>
+      <MessageList
+        messages={this.state.messages}
+        selectToggle={this.selectToggle}
+        starToggle={this.starToggle}
+        newState={this.newState}/>
     </div>);
   }
 }

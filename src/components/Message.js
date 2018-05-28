@@ -52,6 +52,7 @@ export default class Message extends React.Component {
   starred = (e) => {
     e.preventDefault()
     this.props.starToggle(this.props.message)
+    
   }
 
   render() {

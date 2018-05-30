@@ -19,7 +19,7 @@ export default class MessageList extends React.Component {
   render() {
     return (
       <div>
-        {this.state.messages.map((message, i) => <Message key={i} message={message} selectToggle = {this.props.selectToggle} starToggle = {this.props.starToggle} newState={this.props.newState} />)}
+        {this.state.messages.map((message, i) => <Message key={i} message={message} selectToggle = {this.props.selectToggle} starToggle = {this.props.starToggle} patchStuff={this.props.patchStuff} />)}
       </div>
     )
   }

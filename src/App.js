@@ -7,8 +7,6 @@ const API = 'http://localhost:8082/api/messages/'
 
 class App extends Component {
 
-  
-
   constructor(props) {
     super(props)
     this.state = {
@@ -30,12 +28,33 @@ class App extends Component {
     }
   }
 
-  newState = (data) => {
-    this.setState({
-      ...this.state,
-      messages: data
+  patchStuff = async (id, command, key, boolean) => {
+    console.log('PATCH JUST GOT CALLED!!!!');
+    let dataObj = {
+      "messageIds": id,
+      command: command,
+      [key]: boolean
+    }
+    const response = await fetch(API, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataObj)
     })
+    // if(response.status === 200){
+    //   let index = this.state.messages.indexOf(message)
+    //
+    //
+    //   // this.markAsRead(message)
+    //   // this.markAsUnread(message)
+    // }
+
   }
+
+
+
 
   selectToggle = (message) => {
 
@@ -53,9 +72,7 @@ class App extends Component {
   }
 
   starToggle = (message) => {
-
-    let index = this.state.messages.indexOf(message)
-
+   let index = this.state.messages.indexOf(message)
     this.setState({
       ...this.state,
       messages: [
@@ -81,8 +98,19 @@ class App extends Component {
     })
   }
 
+  // keepAsReadOrUnread = (isRead) => {
+  //   let messArr = this.state.messages.filter(mess => mess.selected)
+  //   if(messArr){
+  //     messArr.map(m => {
+  //       this.patchStuff(m.id, 'read', 'read', isRead, m)
+  //     })
+  //   }
+  //
+  // }
+
   markAsRead = (message) => {
     let messArr = this.state.messages
+    let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     this.setState({
       ...this.state,
       messages: messArr.map(mess => {
@@ -93,10 +121,13 @@ class App extends Component {
         return mess
       })
     })
+    this.patchStuff(ids, 'read', 'read', true)
+
   }
 
   markAsUnread = (message) => {
     let messArr = this.state.messages
+    let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     this.setState({
       ...this.state,
       messages: messArr.map(mess => {
@@ -106,6 +137,7 @@ class App extends Component {
         return mess
       })
     })
+    this.patchStuff(ids, 'read', 'read', false)
   }
 
   deleteMess = (message) => {
@@ -160,22 +192,23 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-      <Toolbar
-        messages={this.state.messages}
-        selectAll={this.selectAll}
-        markAsRead={this.markAsRead}
-        markAsUnread={this.markAsUnread}
-        deleteMess={this.deleteMess}
-        addLabel={this.addLabel}
-        removeLabel={this.removeLabel}
-        newState={this.newState}/>
+    <Toolbar
+      messages={this.state.messages}
+      selectAll={this.selectAll}
+      markAsRead={this.markAsRead}
+      markAsUnread={this.markAsUnread}
+      deleteMess={this.deleteMess}
+      addLabel={this.addLabel}
+      patchStuff={this.patchStuff}
+      removeLabel={this.removeLabel}
+      keepAsReadOrUnread={this.keepAsReadOrUnread}/>
       <MessageList
         messages={this.state.messages}
         selectToggle={this.selectToggle}
         starToggle={this.starToggle}
-        newState={this.newState}/>
-    </div>);
+        patchStuff={this.patchStuff} />
+      </div>);
+    }
   }
-}
 
-export default App
+  export default App

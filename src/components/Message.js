@@ -3,7 +3,6 @@ import React from 'react'
 export default class Message extends React.Component {
 
   constructor(props) {
-    // console.log(props);
     super(props);
     let selected = false
     let labels = props.message.labels
@@ -51,8 +50,13 @@ export default class Message extends React.Component {
 
   starred = (e) => {
     e.preventDefault()
+    if(this.props.message.starred === true){
+      this.props.patchStuff([this.props.message.id], 'star', 'star', false)
+    } else {
+      this.props.patchStuff([this.props.message.id], 'star', 'star', true)
+    }
     this.props.starToggle(this.props.message)
-    
+
   }
 
   render() {

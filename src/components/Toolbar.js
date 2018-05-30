@@ -24,11 +24,14 @@ export default class Toolbar extends React.Component {
     return div
   }
 
+
+
+
+
   render() {
     let noMsgSelected = this.props.messages.every((msg) => {
       return !msg.selected
     })
-    console.log('noMsgSelected', noMsgSelected);
     return(
       <div className="row toolbar">
         <div className="col-md-12">
@@ -41,11 +44,11 @@ export default class Toolbar extends React.Component {
             <i className={this.selectedIcon()} ></i>
           </button>
 
-          <button className="btn btn-default" onClick = {this.props.markAsRead} disabled ={ noMsgSelected }>
+          <button className="btn btn-default" onClick = {() => this.props.markAsRead(this.props.message)} disabled ={ noMsgSelected }>
             Mark As Read
           </button>
 
-          <button className="btn btn-default" onClick = {this.props.markAsUnread} disabled ={ noMsgSelected }>
+          <button className="btn btn-default" onClick = {() => this.props.markAsUnread(this.props.message)} disabled={ noMsgSelected }>
             Mark As Unread
           </button>
 

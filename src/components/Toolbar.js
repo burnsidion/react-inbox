@@ -56,7 +56,7 @@ export default class Toolbar extends React.Component {
             <option value="gschool">gschool</option>
           </select>
 
-          <select className="form-control label-select" onChange={this.props.removeLabel} disabled ={ noMsgSelected }>
+          <select className="form-control label-select" onChange={(event) => this.props.removeLabel(event.target.value)} disabled ={ noMsgSelected }>
             <option>Remove label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>

@@ -130,7 +130,6 @@ class App extends Component {
 
   addLabel = (label) => {
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
-    console.log("am I here?", label)
     this.patchStuff(ids, 'addLabel', 'label', label)
     this.setState({
       ...this.state,
@@ -148,16 +147,17 @@ class App extends Component {
     })
   }
 
-  removeLabel = (e) => {
-    e.preventDefault()
+
+  removeLabel = (label) => {
+    let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     let messArr = this.state.messages
+    this.patchStuff(ids, 'removeLabel', 'label', label)
     this.setState({
       messages: messArr.map(mess => {
         if (mess.selected) {
-          if (mess.labels.includes(e.target.value) && e.target.value !== "Remove label") {
-            //If already attached to msg, and not "Remove label", then good to remove
+          if (mess.labels.includes(label) && label !== "Remove label") {
             mess.labels = mess.labels.filter(x => {
-              return x !== e.target.value
+              return x !== label
             })
           }
         }

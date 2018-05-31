@@ -26,7 +26,7 @@ export default class Toolbar extends React.Component {
 
 
 
-
+///
 
   render() {
     let noMsgSelected = this.props.messages.every((msg) => {
@@ -52,7 +52,7 @@ export default class Toolbar extends React.Component {
             Mark As Unread
           </button>
 
-          <select className="form-control label-select" onChange = {this.props.addLabel} disabled ={ noMsgSelected }>
+          <select className="form-control label-select" onChange = {(event) => this.props.addLabel(event.target.value)} disabled ={ noMsgSelected }>
             <option>Apply label</option>
             <option value="dev" >dev</option>
             <option value="personal">personal</option>

@@ -29,7 +29,6 @@ class App extends Component {
   }
 
   patchStuff = async (id, command, key, boolean) => {
-    console.log('PATCH JUST GOT CALLED!!!!');
     let dataObj = {
       "messageIds": id,
       command: command,
@@ -43,18 +42,7 @@ class App extends Component {
       },
       body: JSON.stringify(dataObj)
     })
-    // if(response.status === 200){
-    //   let index = this.state.messages.indexOf(message)
-    //
-    //
-    //   // this.markAsRead(message)
-    //   // this.markAsUnread(message)
-    // }
-
   }
-
-
-
 
   selectToggle = (message) => {
 
@@ -72,7 +60,7 @@ class App extends Component {
   }
 
   starToggle = (message) => {
-   let index = this.state.messages.indexOf(message)
+    let index = this.state.messages.indexOf(message)
     this.setState({
       ...this.state,
       messages: [
@@ -98,19 +86,10 @@ class App extends Component {
     })
   }
 
-  // keepAsReadOrUnread = (isRead) => {
-  //   let messArr = this.state.messages.filter(mess => mess.selected)
-  //   if(messArr){
-  //     messArr.map(m => {
-  //       this.patchStuff(m.id, 'read', 'read', isRead, m)
-  //     })
-  //   }
-  //
-  // }
-
   markAsRead = (message) => {
     let messArr = this.state.messages
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
+    this.patchStuff(ids, 'read', 'read', true)
     this.setState({
       ...this.state,
       messages: messArr.map(mess => {
@@ -121,13 +100,13 @@ class App extends Component {
         return mess
       })
     })
-    this.patchStuff(ids, 'read', 'read', true)
 
   }
 
   markAsUnread = (message) => {
     let messArr = this.state.messages
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
+    this.patchStuff(ids, 'read', 'read', false)
     this.setState({
       ...this.state,
       messages: messArr.map(mess => {
@@ -137,7 +116,6 @@ class App extends Component {
         return mess
       })
     })
-    this.patchStuff(ids, 'read', 'read', false)
   }
 
   deleteMess = (message) => {
@@ -150,24 +128,22 @@ class App extends Component {
     })
   }
 
-  addLabel = (e) => {
-    e.preventDefault()
+  addLabel = (label) => {
+    let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
+    this.patchStuff(ids, 'addLabel', 'label', true)
     this.setState({
       ...this.state,
       messages: this.state.messages.map(mess => {
         if (mess.selected) {
-          if (!mess.labels.includes(e.target.value) && e.target.value !== "Apply label") {
+          if (!mess.labels.includes(label) && label !== "Apply label") {
             // If not already attached to msg, and not "Apply label", then kosher to proceed
             mess.labels = [
               ...mess.labels,
-              e.target.value
+              label
             ]
-          } else {
-            // trying to do something undesired with the label add
-          }
+          } 
         }
         return mess
-
       })
     })
   }
@@ -192,23 +168,10 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-    <Toolbar
-      messages={this.state.messages}
-      selectAll={this.selectAll}
-      markAsRead={this.markAsRead}
-      markAsUnread={this.markAsUnread}
-      deleteMess={this.deleteMess}
-      addLabel={this.addLabel}
-      patchStuff={this.patchStuff}
-      removeLabel={this.removeLabel}
-      keepAsReadOrUnread={this.keepAsReadOrUnread}/>
-      <MessageList
-        messages={this.state.messages}
-        selectToggle={this.selectToggle}
-        starToggle={this.starToggle}
-        patchStuff={this.patchStuff} />
-      </div>);
-    }
-  }
+    <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} patchStuff={this.patchStuff} removeLabel={this.removeLabel} keepAsReadOrUnread={this.keepAsReadOrUnread}/>
+    <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle} patchStuff={this.patchStuff}/>
+  </div>);
+}
+}
 
-  export default App
+export default App

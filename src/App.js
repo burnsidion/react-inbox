@@ -28,11 +28,11 @@ class App extends Component {
     }
   }
 
-  patchStuff = async (id, command, key, boolean) => {
+  patchStuff = async (id, command, key, value) => {
     let dataObj = {
       "messageIds": id,
       command: command,
-      [key]: boolean
+      [key]: value
     }
     const response = await fetch(API, {
       method: 'PATCH',
@@ -130,18 +130,18 @@ class App extends Component {
 
   addLabel = (label) => {
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
-    this.patchStuff(ids, 'addLabel', 'label', true)
+    console.log("am I here?", label)
+    this.patchStuff(ids, 'addLabel', 'label', label)
     this.setState({
       ...this.state,
       messages: this.state.messages.map(mess => {
         if (mess.selected) {
           if (!mess.labels.includes(label) && label !== "Apply label") {
-            // If not already attached to msg, and not "Apply label", then kosher to proceed
             mess.labels = [
               ...mess.labels,
               label
             ]
-          } 
+          }
         }
         return mess
       })

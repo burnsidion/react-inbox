@@ -42,7 +42,7 @@ export default class Message extends React.Component {
   }
 
   renderLabels = () => {
-    let htmlLabels = this.state.labels.map((label, i) => {
+    let htmlLabels = this.props.message.labels.map((label, i) => {
       return <span key={i} className="label label-warning">{label}</span>
     });
     return htmlLabels;
@@ -58,6 +58,7 @@ export default class Message extends React.Component {
     this.props.starToggle(this.props.message)
 
   }
+
 
   render() {
     return (<div className={this.read()}>

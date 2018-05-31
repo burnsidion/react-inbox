@@ -24,13 +24,10 @@ export default class Toolbar extends React.Component {
     return div
   }
 
-
-
-///
-
   render() {
     let noMsgSelected = this.props.messages.every((msg) => {
       return !msg.selected
+
     })
     return(
       <div className="row toolbar">

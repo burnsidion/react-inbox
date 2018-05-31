@@ -120,6 +120,8 @@ class App extends Component {
 
   deleteMess = (message) => {
     let messArr = this.state.messages
+    let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
+    this.patchStuff(ids, 'delete')
     this.setState({
       ...this.state,
       messages: messArr.filter(mess => {
@@ -147,7 +149,6 @@ class App extends Component {
     })
   }
 
-
   removeLabel = (label) => {
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     let messArr = this.state.messages
@@ -168,10 +169,10 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-    <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} patchStuff={this.patchStuff} removeLabel={this.removeLabel} keepAsReadOrUnread={this.keepAsReadOrUnread}/>
-    <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle} patchStuff={this.patchStuff}/>
-  </div>);
-}
+      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} patchStuff={this.patchStuff} removeLabel={this.removeLabel} keepAsReadOrUnread={this.keepAsReadOrUnread}/>
+      <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle} patchStuff={this.patchStuff}/>
+    </div>);
+  }
 }
 
 export default App

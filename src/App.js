@@ -30,12 +30,6 @@ class App extends Component {
     }
   }
 
-  newState = (data) => {
-    this.setState({
-      ...this.state.formHidden,
-      messages: data
-    })
-  }
 
   //Single function to handle all patch requests
   patchStuff = async (id, command, key, value) => {
@@ -206,7 +200,7 @@ class App extends Component {
         keepAsReadOrUnread={this.keepAsReadOrUnread}
         formHidden={this.state.formHidden}
         hideCompose={this.hideCompose}
-        newState={this.newState}
+
       />
         <MakeMessage
           hideCompose={this.hideCompose}

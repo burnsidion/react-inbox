@@ -38,7 +38,7 @@ class App extends Component {
       command: command,
       [key]: value
     }
-    const response = await fetch(API, {
+    await fetch(API, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
@@ -179,11 +179,11 @@ class App extends Component {
     })
   }
 
-  hideCompose = (boolean) => {
-    this.setState({
-      ...this.state.messages,
-      formHidden: boolean
-    })
+  //Toggle the form to be hidden or not on click of the red '+' button
+  composeToggle = () => {
+  	this.state.formHidden === 'hidden' ?
+  	this.setState({formHidden: ''}) :
+  	this.setState({formHidden: 'hidden'})
   }
 
   render() {
@@ -199,15 +199,12 @@ class App extends Component {
         removeLabel={this.removeLabel}
         keepAsReadOrUnread={this.keepAsReadOrUnread}
         formHidden={this.state.formHidden}
-        hideCompose={this.hideCompose}
-
+        composeToggle={this.composeToggle}
       />
-        <MakeMessage
-          hideCompose={this.hideCompose}
-          formHidden={this.state.formHidden}
-          messages={this.state.messages}
-
-        />
+      <MakeMessage
+        formHidden={this.state.formHidden}
+        messages={this.state.messages}
+      />
       <MessageList
         messages={this.state.messages}
         selectToggle={this.selectToggle}

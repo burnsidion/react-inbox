@@ -25,9 +25,11 @@ export default class Toolbar extends React.Component {
   }
 
   composeToggle = () => {
-	this.props.formHidden === 'hidden' ?
-	this.setState({formHidden: ''}) :
-	this.setState({formHidden: 'hidden'})
+    if (this.props.formHidden) {
+        return this.props.hideCompose('')
+      } else {
+        return this.props.hideCompose('hidden')
+      }
 }
 
   render() {
@@ -44,11 +46,11 @@ export default class Toolbar extends React.Component {
           </p>
 
           { this.props.formHidden==='hidden'?
-            <button className="btn btn-danger" onClick={this.composeToggle}>
+            <button className="btn btn-danger" onClick={this.props.composeToggle}>
               <i className="fa fa-plus"></i>
             </button>
             :
-            <button className="btn btn-danger" onClick={this.composeToggle}>
+            <button className="btn btn-danger" onClick={this.props.composeToggle}>
               <i className="fa fa-minus"></i>
             </button>
           }

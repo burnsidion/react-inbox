@@ -9,7 +9,7 @@ export default class MakeMessage extends React.Component {
 
   render() {
     return (
-      <form className={"form-horizontal well" }>
+      <form className={`form-horizontal well ${this.props.formHidden}`}>
   <div className="form-group">
     <div className="col-sm-8 col-sm-offset-2">
       <h4>Compose Message</h4>

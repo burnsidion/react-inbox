@@ -24,6 +24,14 @@ export default class Toolbar extends React.Component {
     return div
   }
 
+  composeToggle = () => {
+    if (this.props.formHidden) {
+      return this.props.hideCompose('')
+    } else {
+      return this.props.hideCompose('hidden')
+    }
+  }
+
   render() {
     let noMsgSelected = this.props.messages.every((msg) => {
       return !msg.selected
@@ -37,9 +45,15 @@ export default class Toolbar extends React.Component {
             unread messages
           </p>
 
-          <a className="btn btn-danger">
-            <i className="fa fa-plus"></i>
-          </a>
+          { this.props.formHidden ?
+            <button className="btn btn-danger" onClick={this.composeToggle}>
+              <i className="fa fa-plus"></i>
+            </button>
+            :
+            <button className="btn btn-danger" onClick={this.composeToggle}>
+              <i className="fa fa-minus"></i>
+            </button>
+          }
 
           <button className="btn btn-default" onClick={this.props.selectAll}>
             <i className={this.selectedIcon()} ></i>

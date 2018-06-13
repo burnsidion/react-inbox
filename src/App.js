@@ -11,7 +11,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      messages: []
+      messages: [],
+      formHidden: 'hidden'
     }
   }
 
@@ -21,12 +22,19 @@ class App extends Component {
       const json = await response.json()
       const messages = json._embedded.messages
       this.setState({
-        ...this.state,
+        ...this.state.formHidden,
         messages
       })
     } else {
       console.log('Couldn/t fetch json', response.status);
     }
+  }
+
+  newState = (data) => {
+    this.setState({
+      ...this.state.formHidden,
+      messages: data
+    })
   }
 
   //Single function to handle all patch requests
@@ -177,6 +185,13 @@ class App extends Component {
     })
   }
 
+  hideCompose = (boolean) => {
+    this.setState({
+      ...this.state.messages,
+      formHidden: boolean
+    })
+  }
+
   render() {
     return (<div className="container">
       <Toolbar
@@ -188,12 +203,24 @@ class App extends Component {
         addLabel={this.addLabel}
         patchStuff={this.patchStuff}
         removeLabel={this.removeLabel}
-        keepAsReadOrUnread={this.keepAsReadOrUnread}/>
+        keepAsReadOrUnread={this.keepAsReadOrUnread}
+        formHidden={this.state.formHidden}
+        hideCompose={this.hideCompose}
+        newState={this.newState}
+      />
+        <MakeMessage
+          hideCompose={this.hideCompose}
+          formHidden={this.state.formHidden}
+          messages={this.state.messages}
+
+        />
       <MessageList
         messages={this.state.messages}
         selectToggle={this.selectToggle}
         starToggle={this.starToggle}
-        patchStuff={this.patchStuff}/>
+        patchStuff={this.patchStuff}
+        newState={this.newState}
+      />
     </div>);
   }
 }

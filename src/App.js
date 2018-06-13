@@ -1,5 +1,6 @@
 import MessageList from './components/MessageList'
 import Toolbar from './components/Toolbar'
+import MakeMessage from './components/MakeMessage'
 import React, {Component} from 'react';
 import './App.css';
 
@@ -28,6 +29,7 @@ class App extends Component {
     }
   }
 
+  //Single function to handle all patch requests
   patchStuff = async (id, command, key, value) => {
     let dataObj = {
       "messageIds": id,
@@ -44,6 +46,7 @@ class App extends Component {
     })
   }
 
+  //Check and uncheck boxes next to each message
   selectToggle = (message) => {
 
     let index = this.state.messages.indexOf(message)
@@ -59,6 +62,7 @@ class App extends Component {
     })
   }
 
+  //Check and uncheck stars next to each message
   starToggle = (message) => {
     let index = this.state.messages.indexOf(message)
     this.setState({
@@ -73,6 +77,7 @@ class App extends Component {
     })
   }
 
+  //Select and unselect all messages at once
   selectAll = (event) => {
 
     event.preventDefault()
@@ -86,6 +91,7 @@ class App extends Component {
     })
   }
 
+  //Mark selected message(s) as read
   markAsRead = (message) => {
     let messArr = this.state.messages
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
@@ -103,6 +109,7 @@ class App extends Component {
 
   }
 
+  //Mark selected message(s) as unread
   markAsUnread = (message) => {
     let messArr = this.state.messages
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
@@ -118,6 +125,7 @@ class App extends Component {
     })
   }
 
+  //Delete selected message(s)
   deleteMess = (message) => {
     let messArr = this.state.messages
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
@@ -130,6 +138,7 @@ class App extends Component {
     })
   }
 
+  //Add specified label to selected message(s)
   addLabel = (label) => {
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     this.patchStuff(ids, 'addLabel', 'label', label)
@@ -149,6 +158,7 @@ class App extends Component {
     })
   }
 
+  //Remove specified label from selected message(s)
   removeLabel = (label) => {
     let ids = this.state.messages.filter(m => m.selected).map(m => m.id)
     let messArr = this.state.messages
@@ -169,8 +179,21 @@ class App extends Component {
 
   render() {
     return (<div className="container">
-      <Toolbar messages={this.state.messages} selectAll={this.selectAll} markAsRead={this.markAsRead} markAsUnread={this.markAsUnread} deleteMess={this.deleteMess} addLabel={this.addLabel} patchStuff={this.patchStuff} removeLabel={this.removeLabel} keepAsReadOrUnread={this.keepAsReadOrUnread}/>
-      <MessageList messages={this.state.messages} selectToggle={this.selectToggle} starToggle={this.starToggle} patchStuff={this.patchStuff}/>
+      <Toolbar
+        messages={this.state.messages}
+        selectAll={this.selectAll}
+        markAsRead={this.markAsRead}
+        markAsUnread={this.markAsUnread}
+        deleteMess={this.deleteMess}
+        addLabel={this.addLabel}
+        patchStuff={this.patchStuff}
+        removeLabel={this.removeLabel}
+        keepAsReadOrUnread={this.keepAsReadOrUnread}/>
+      <MessageList
+        messages={this.state.messages}
+        selectToggle={this.selectToggle}
+        starToggle={this.starToggle}
+        patchStuff={this.patchStuff}/>
     </div>);
   }
 }

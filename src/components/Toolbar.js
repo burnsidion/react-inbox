@@ -37,6 +37,10 @@ export default class Toolbar extends React.Component {
             unread messages
           </p>
 
+          <a className="btn btn-danger">
+            <i className="fa fa-plus"></i>
+          </a>
+
           <button className="btn btn-default" onClick={this.props.selectAll}>
             <i className={this.selectedIcon()} ></i>
           </button>

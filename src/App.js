@@ -40,13 +40,35 @@ class App extends Component {
     }
     await fetch(API, {
       method: 'PATCH',
+      body: JSON.stringify(dataObj),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dataObj)
+      }
     })
   }
+
+  //Single function to handle all post requests
+  postStuff = async (data) => {
+    let response = await fetch(API, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    if (response.status === 200) {
+      const json = await response.json()
+      this.setState({
+        ...this.state.formHidden,
+        messages: [...this.state.messages, json]
+      })
+    } else {
+      console.log('Couldn\'t Post New Message: ', response.status)
+    }
+  }
+
 
   //Check and uncheck boxes next to each message
   selectToggle = (message) => {
@@ -204,6 +226,8 @@ class App extends Component {
       <MakeMessage
         formHidden={this.state.formHidden}
         messages={this.state.messages}
+        postStuff={this.postStuff}
+        composeToggle={this.composeToggle}
       />
       <MessageList
         messages={this.state.messages}

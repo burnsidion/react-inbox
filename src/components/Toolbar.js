@@ -24,13 +24,7 @@ export default class Toolbar extends React.Component {
     return div
   }
 
-  composeToggle = () => {
-    if (this.props.formHidden) {
-        return this.props.hideCompose('')
-      } else {
-        return this.props.hideCompose('hidden')
-      }
-}
+
 
   render() {
     let noMsgSelected = this.props.messages.every((msg) => {
